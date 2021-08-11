@@ -28,8 +28,8 @@ def display_names(users_folder):
 		# file = open(users_folder+file_name,'r')
 		with open(users_folder+file_name,'r') as file:
 			user_names_list.extend(file.readlines())
-			# for user in user_names_list:
-			# 	print(user.strip())
+			for user in user_names_list:
+				print(user.strip())
 display_names(users_folder)
 user_names = [user.strip() for user in user_names_list]
 
