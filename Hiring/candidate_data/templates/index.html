@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiring management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5 align-center">
+    
+<form action="" method="POST">
+{% csrf_token %}
+<!-- candidate name : <input type="text" name="candidate_name"/><br/>
+resume/portfolio link : <input type="url" name="resume_portfolio_link"><br/>
+primary skills : <input type="text" name="primary_skills"/><br/>
+secondary skills : <input type="text" name="secondary_skills"/><br/>
+experience : <input type="text" name="candidate_experince"/><br/>
+<input type="submit" value="submit"/> -->
+<h1 class="m-5 fs-1 text-center">Join us Today </h1>
+<table class=" table table-hover">
+    <tr>
+        <th><label for="name" class="form-label">Name</label></th>
+        <td><input pattern="[a-z A-Z]+" placeholder="enter only alphabets" type="text" class="form-control" name="candidate_name" id="name" required /></td>
+    </tr>
+    <tr>
+        <th><label for="link" class="form-label">Resume/Portfolio link</label></th>
+        <td><input type="url" class="form-control" name="resume_portfolio_link" id="link" required /></td>
+    </tr>
+    <tr>
+        <th><label for="p_skill" class="form-label"> Primary Skills </label></th>
+        <td><input type="text"  class="form-control" name="primary_skills" id="p_skill" required /></td>
+    </tr>
+    <tr>
+        <th><label for="s_skill" class="form-label"> Socandry Skills </label></th>
+        <td><input type="text"  class="form-control" name="secondary_skills" id="s_skill" /></td>
+    </tr>
+    <tr>
+        <th><label for="experience" class="form-label"> Experience </label></th>
+        <td><input type="text"  class="form-control" name="candidate_experince" id="experience" required /></td>
+    </tr>
+    <tr>
+        <td colspan="2"><input type="submit"class="btn  btn-lg btn-warning fs-5"  value="submit"/></td>
+
+    </tr>
+</table>
+</form>
+
+{% for user in users %}
+        <span>{{ user}}</span>
+{% endfor %}
+</div>
+</body>
+</html>
