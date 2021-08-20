@@ -2,6 +2,10 @@ import datetime
 import uuid
 import os,getpass
 import json
+"""
+     TODO:Create a function to print user name and datetime of the execution,  
+          Function should have two variables to store datetime and username respectively.
+"""
 # current datetime
 now = datetime.datetime.now()
 # formating the output in human redable format
@@ -12,7 +16,9 @@ print(current_date_time)
 print(getpass.getuser())
 
 # Getting present working directory
-
+"""
+   TODO: file location should not be static location.Add input function to get folder location on runtime.
+"""
 PWD = os.getcwd()
 users_folder = PWD+'/users/'
 
@@ -61,3 +67,9 @@ def write_json(data, filename='data.json'):
 
 # as soon as we call the function it will write data to json file
 write_json(user_info)
+
+
+"""
+  TODO:Program should be able to execute from the shell script.
+"""
+# alldone
