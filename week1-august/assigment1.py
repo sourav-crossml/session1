@@ -61,3 +61,5 @@ def write_json(data, filename='data.json'):
 
 # as soon as we call the function it will write data to json file
 write_json(user_info)
+
+# alldone
