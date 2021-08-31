@@ -1,0 +1,50 @@
+  {% extends 'Doc_app/base.html' %}
+  {% load static %}
+  {% block title%} register {% endblock %}
+  {% block body %}
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+    
+  <div class="container">
+          
+      <div class="col-6 mx-auto mt-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title">LOGIN</h3>
+                
+                <form method="POST" action="{% url 'login' %}">
+                  <br>
+                  {% csrf_token %}
+                    
+                  
+                  <div class="form-group">
+                    
+                    <input type="email" class="form-control" name="username" id="exampleInputEmail1" placeholder="Enter your Username" required>
+                    
+
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="************" required>
+                  </div>
+                  <br>
+                  
+                  <button type="submit" name="name" class="btn btn-primary">Submit</button>
+                </form>
+
+                <br>
+                <div>
+                    <small>Don't have any account! <a href="{% url 'register' %}">SIGN UP</a> here.</small>
+                </div>
+            </div>
+        </div>
+      </div>
+
+  </div>
+  {% endblock %}

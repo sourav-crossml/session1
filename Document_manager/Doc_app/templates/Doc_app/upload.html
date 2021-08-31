@@ -1,0 +1,25 @@
+{% load static %}
+{% block title%} <p class="nav-link text-uppercase active " style="margin-left: 29rem;">hello, &nbsp;{{user.first_name}}
+</p> {% endblock %}
+{% block body %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <form action="save" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- <input type="file" id="test" name="test" accept=".pdf,.doc"/> -->
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<p><a href="{% url 'index' %}">Return to home</a></p>
+<a class="nav-link" href="{% url 'logout' %}"> LOGOUT</a>
+<!-- <a class="nav-link" href="{% url 'list_doc' %}"> click to view your pdf</a> -->
+
+
+{% endblock %}

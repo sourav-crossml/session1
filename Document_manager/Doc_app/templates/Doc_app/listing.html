@@ -1,0 +1,20 @@
+
+{% block body %}
+
+{% if user.is_authenticated %}
+{% for i in context %}
+    <p>Title:{{i.document}}</p>
+    <p>DOWNLOAD THE FILE FROM HERE<a href="{{i.document.url}}" download>{{i.document}}</a></p>
+    {% endfor %}
+{% endif %}
+{% if pdf_list %}
+{% for pdf in pdf_list %}
+    <tr>
+      	<th scope="row"> {{forloop.counter}}</th>
+	    <td>{{pdf.name}}</td>
+	    <td>{{pdf.created_at}}</td>
+	    <td><a href="{{ pdf.PDF.url }}" class="btn btn-primary" target="_blank">Download</a></td>
+    </tr>
+    {% endfor %}
+{% endif %}
+{% endblock %}
