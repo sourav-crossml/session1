@@ -9,12 +9,12 @@ class Document(models.Model):
     this model will deal with all sort of fuctionality related to user document
     """
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    description = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to='documents/', validators=[validate_file_extension,file_size])
     uploaded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.username + self.description
+        return self.user.username + self.name
 
     

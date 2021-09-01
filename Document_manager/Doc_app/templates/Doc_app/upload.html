@@ -1,3 +1,4 @@
+{% extends 'Doc_app/base.html' %}
 {% load static %}
 {% block title%} <p class="nav-link text-uppercase active " style="margin-left: 29rem;">hello, &nbsp;{{user.first_name}}
 </p> {% endblock %}
@@ -9,17 +10,66 @@
     {% endfor %}
 </ul>
 {% endif %}
-    <form action="save" method="post" enctype="multipart/form-data">
+<div class="container">
+          
+    <div class="col-6 mx-auto mt-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="card-title">hello, &nbsp;{{user.first_name}}</h3>
+                <p class="card-title">Upload File Here</p>
+<form action="save" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <!-- <input type="file" id="test" name="test" accept=".pdf,.doc"/> -->
-        <button type="submit">Upload</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
+        <a class="nav-link" class="btn btn-primary" href="{% url 'logout' %}"> Logout</a>
     </form>
 </div>
+</div>    
+</div>
+</div>
 
+<form class="mt-5 mx-2" style="float: left;">
+    <input name="report_type"  type="hidden" value='sort_by_name'>
+    <button type="submit" class="btn btn-primary mx-5">Sort By Name </button>
+</form>
+<form class="mt-5" style="float: left;"> 
+    <input name="report_type" type="hidden" value='current_month'>
+    <button type="submit " class="btn btn-primary mx-5">Current month </button>
+</form>
+<form class="mt-5">
+    <input name="report_type" type="hidden" value='current_year'>
+    <button type="submit" class="btn btn-primary mx-5">Current year </button>
+</form>
+<form class="mt-5 mx-2"> 
+    <div>
+        <label for="start">From </label>
+          <input type="date" id="start" name="startdate">
+          <label for="end">To </label>
+          <input type="date" id="end" name="enddate">
+          <input type="submit" name="doc_range" value="Show">
+      </div>
+</form>
+<!-- {{context}} -->
+<table class="table mt-3 mx-2">
+    <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Title</th>
+        <th>File</th>
+        <th>Date</th>
+        <th>Download</th>
+</tr>
+{% for value in context %}
+<tr>
+    <td>{{value.id}}</td>
+    <td>{{value.user}}</td>
+    <td>{{ value.name }}</td>
+    <td>{{ value.document }}</td>
+<td>{{ value.uploaded_at }}</td>
+<td><a href="{{ pdf.document.url }}" download="{{ pdf.document.url }}" class="btn btn-primary" target="_blank">Download</a></td>
+</tr>
+{% endfor %}
+</table>
 <p><a href="{% url 'index' %}">Return to home</a></p>
-<a class="nav-link" href="{% url 'logout' %}"> LOGOUT</a>
-<!-- <a class="nav-link" href="{% url 'list_doc' %}"> click to view your pdf</a> -->
-
-
 {% endblock %}
