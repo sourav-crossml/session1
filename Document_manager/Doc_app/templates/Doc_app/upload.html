@@ -41,15 +41,16 @@
     <input name="report_type" type="hidden" value='current_year'>
     <button type="submit" class="btn btn-primary mx-5">Current year </button>
 </form>
-<form class="mt-5 mx-2"> 
+<form action="{% url 'iindex' %}" method="POST" class="mx-3">
+    {% csrf_token %}
     <div>
-        <label for="start">From </label>
-          <input type="date" id="start" name="startdate">
-          <label for="end">To </label>
-          <input type="date" id="end" name="enddate">
-          <input type="submit" name="doc_range" value="Show">
-      </div>
-</form>
+      <label for="start" class="mx-1">From </label>
+        <input class="mr-2" type="date" id="start" name="startdate">
+        <label class="mx-1" for="end">To </label>
+        <input class="mx-2" type="date" id="end" name="enddate">
+        <input class="btn btn-primary my-3" type="submit" name="submit" value="Show">
+    </div>
+  </form >
 <!-- {{context}} -->
 <table class="table mt-3 mx-2">
     <tr>
@@ -67,7 +68,7 @@
     <td>{{ value.name }}</td>
     <td>{{ value.document }}</td>
 <td>{{ value.uploaded_at }}</td>
-<td><a href="{{ pdf.document.url }}" download="{{ pdf.document.url }}" class="btn btn-primary" target="_blank">Download</a></td>
+<td><a href="{{ value.document.url }}" download="{{ value.document.url }}" class="btn btn-primary" target="_blank">Download</a></td>
 </tr>
 {% endfor %}
 </table>

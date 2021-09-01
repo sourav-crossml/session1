@@ -58,40 +58,35 @@ def index(request):
 @login_required
 def iindex(request):
     """
-    this function will render upload page to user and filtering data
+    this function will render upload page to user
     """
     form=DocumentForm
     doc=Document.objects.all()
     
     if request.user.is_authenticated:
             today = datetime.date.today()
-            print(today)
             current_month = datetime.date.today().month
             current_year = datetime.date.today().year
-            user=request.user.id
-            user_obj=User.objects.get(pk=user)
-            print(user_obj)
-            pdf_list=Document.objects.all().filter(user=user_obj.pk)
-            print(pdf_list)
+            pdf_list=Document.objects.filter(user__id=request.user.pk)
             if request.method == 'GET':
                 report_type = request.GET.get('report_type')
                 if report_type == 'sort_by_name':
-                    user_data = Document.objects.filter(user=User.objects.get(username=request.user.username)).order_by('name')
+                    user_data = pdf_list.order_by('name')
                     return render(request, 'Doc_app/upload.html',{'form':form,'context':user_data})
                 elif report_type=='current_month':
-                    user_data = Document.objects.filter(user=User.objects.get(username=request.user.username)).filter(uploaded_at__month=current_month)
+                    user_data = pdf_list.filter(uploaded_at__month=current_month)
                     return render(request, 'Doc_app/upload.html', {'form':form,'context': user_data})
                 elif report_type=='current_year':
-                    user_data = Document.objects.filter(user=User.objects.get(username=request.user.username)).filter(uploaded_at__year=current_year)
+                    user_data = pdf_list.filter(uploaded_at__year=current_year)
                     return render(request, 'Doc_app/upload.html', {'form':form,'context': user_data})
-                elif report_type=='doc_range':
-                    start_date = request.POST['startdate']
-                    end_date = request.POST['enddate']
-                    print(start_date,end_date)
-                    user_data = Document.objects.filter(user=User.objects.get(username=request.user.username)).filter(uploaded_at__range=[start_date, end_date])
-                    print(user_data)
-                    return render(request, 'Doc_app/upload.html', {'form':form,'context': user_data})
-            return render(request, 'Doc_app/upload.html',{'form':form,'context':pdf_list})
+            elif request.method=='POST':
+            # breakpoint()
+                start_date = request.POST['startdate']
+                end_date = request.POST['enddate']
+                user_data = pdf_list.filter(user=request.user, uploaded_at__range=[start_date,end_date])
+                return render(request, 'Doc_app/upload.html', {'form':form,'context': user_data})       
+            else:
+                return render(request, 'Doc_app/upload.html',{'form':form,'context':pdf_list})
 
 def login(request):
     """
@@ -150,3 +145,16 @@ def logout(request):
     messages.success(request,'You have been logout!!')
     return redirect("index")
 
+
+@login_required
+def list_doc(requset):
+    """
+    filtering work will be done here
+    """
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            user=request.user.id
+            user_obj=User.objects.get(pk=user)
+            print(user_obj)
+            pdf_list=Document.objects.all().filter(user=user_obj.pk)
+            return render(request,'Doc_app/upload.html',{'pdf_list':pdf_list})
