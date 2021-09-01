@@ -58,7 +58,7 @@ def index(request):
 @login_required
 def iindex(request):
     """
-    this function will render upload page to user
+    this function will render upload page to user and filtering data
     """
     form=DocumentForm
     doc=Document.objects.all()
@@ -150,16 +150,3 @@ def logout(request):
     messages.success(request,'You have been logout!!')
     return redirect("index")
 
-
-@login_required
-def list_doc(requset):
-    """
-    filtering work will be done here
-    """
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            user=request.user.id
-            user_obj=User.objects.get(pk=user)
-            print(user_obj)
-            pdf_list=Document.objects.all().filter(user=user_obj.pk)
-            return render(request,'Doc_app/upload.html',{'pdf_list':pdf_list})
