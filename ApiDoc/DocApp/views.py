@@ -1,11 +1,16 @@
-from DocApp.serializers import DocumentSerializer
-from DocApp.models import Document
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from .models import Document
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .serializers import DocumentSerializer
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from rest_framework import viewsets
-from django.shortcuts import get_object_or_404
-from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ParseError
+from rest_framework.parsers import FileUploadParser
+from rest_framework.views import APIView
+from rest_framework.decorators import permission_classes,authentication_classes,action
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
@@ -22,9 +27,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing Document instances.
     """
-    permission_classes = (IsAuthenticated,) 
-    authentication_classes = (TokenAuthentication,) 
-
+    authentication_classes=([TokenAuthentication,])
+    permission_classes=([IsAuthenticated,])
     serializer_class = DocumentSerializer
-    queryset = Document.objects.all()
-    
+    def get_queryset(self, *args, **kwargs):
+        return Document.objects.filter(user=self.request.user)
